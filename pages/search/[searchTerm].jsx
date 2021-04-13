@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export default function Search (initialData){
     const router = useRouter()
@@ -10,6 +11,7 @@ export default function Search (initialData){
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="stylesheet" href="/styles.css"/>
             </Head>
+            <p>Go <Link href="/"><a>home</a></Link></p>
             <h1>Search results for: {router.query.searchTerm}</h1>
 
             <div className="giphy-search-results-grid">
