@@ -15,7 +15,7 @@ export default function Search (initialData){
             <h1>Search results for: {router.query.searchTerm}</h1>
 
             <div className="giphy-search-results-grid">
-                {initialData.giphys.map((each, index) => {
+                {initialData.movies.map((each, index) => {
                     return(
                         <div key={index}>
                         <h3>{each.title}</h3>
@@ -29,8 +29,9 @@ export default function Search (initialData){
 }
 
 export async function getServerSideProps(context) {
+  //TODO add url
   const searchTerm = context.query.searchTerm
-  let giphys = await fetch(`https://api.giphy.com/v1/gifs/search?q=${searchTerm}&alimit=6`)
-  giphys = await giphys.json()
-  return {props: {giphys: giphys.data}}
+  let movies = await fetch(`https://api.giphy.com/v1/gifs/search?q=${searchTerm}&alimit=6`)
+  movies = await movies.json()
+  return {props: {movies: movies.data}}
 }

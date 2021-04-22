@@ -5,10 +5,10 @@ import Link from 'next/link'
 export default function Home(initialData) {
   const [formInputs, setFormInputs] = useState({})
   const [searchResults, setSearchResults] = useState([])
-  const [searchTerm, setSearchTerm] = useState('cats')
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(()=>{
-    setSearchResults(initialData.catGiphys.data)
+    setSearchResults(initialData.trendingMovies.data)
   }, [initialData])
 
   const handleInputs = (event) => {
@@ -18,9 +18,10 @@ export default function Home(initialData) {
 
   const search = async (event) => {
     event.preventDefault()
-    let giphys = await fetch(`https://api.giphy.com/v1/gifs/search?q=${formInputs.searchTerm}&api_key=`)
-    giphys = await giphys.json()
-    setSearchResults(giphys.data)
+    //TODO: add url
+    let movies = await fetch(``)
+    movies = await movies.json()
+    setSearchResults(movies.data)
     setSearchTerm(formInputs.searchTerm)
 }
 
@@ -39,8 +40,8 @@ export default function Home(initialData) {
         <button>Search</button>
       </form>
 
-      <p>Share this search with others:
-  
+      <p>Share this search with others:</p>
+
       <Link
             href="/search/[pid]"
             as={`/search/${searchTerm}`}>
@@ -49,7 +50,7 @@ export default function Home(initialData) {
               </a>
       </Link>
 
-      <div className="giphy-search-results-grid">
+      {/* <div className="giphy-search-results-grid">
          {searchResults.map((each, index) => {
            return(
              <div key={index}>
@@ -58,14 +59,15 @@ export default function Home(initialData) {
              </div>
            )
          })}
-       </div>
-
+       </div> */}
     </div>
   )
 }
 
 export async function getServerSideProps() {
-  let catGiphys = await fetch('https://api.giphy.com/v1/gifs/search?q=cats&api_key=')
-  catGiphys = await catGiphys.json()
-  return {props: {catGiphys: catGiphys}}
+  //TODO add url
+  let trendingMovies = await fetch('')
+  trendingMovies = await trendingMovies.json()
+  console.log(trendingMovies);
+  return {props: {trendingMovies: trendingMovies}}
 }
