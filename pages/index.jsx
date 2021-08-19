@@ -2,6 +2,7 @@ import Head from 'next/head'
 import {useEffect, useState} from 'react'
 import Link from 'next/link'
 import getConfig from 'next/config'
+import Movie from '../src/components/Movie'
 
 // Only holds serverRuntimeConfig and publicRuntimeConfig
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
@@ -18,14 +19,14 @@ export default function Home(initialData) {
   const handleInputs = (event) => {
     let {name, value} = event.target
     setFormInputs({ ...formInputs, [name]: value });
+    setSearchTerm(event.target.value);
   }
 
   const search = async (event) => {
     event.preventDefault()
-    let movies = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=1f6d5f7ad0f4eb427ec7134856eff45a&language=en-US&query=${formInputs.searchTerm}&page=1&include_adult=false`)
+    let movies = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&query=${formInputs.searchTerm}&page=1&include_adult=false`)
     movies = await movies.json()
-    setSearchResults(movies.data)
-    setSearchTerm(formInputs.searchTerm)
+    setSearchResults(movies.results)
 }
 
   return (
@@ -39,7 +40,7 @@ export default function Home(initialData) {
       <h1>Search results for: {searchTerm}</h1>
 
       <form onSubmit={search}>
-        <input name="searchTerm" onChange={handleInputs} type="text" required />
+        <input className="search" name="searchTerm" value={searchTerm} onChange={handleInputs} type="text" required />
         <button>Search</button>
       </form>
 
@@ -53,13 +54,15 @@ export default function Home(initialData) {
               </a>
       </Link>
 
-       <div className="giphy-search-results-grid">
+       <div className="movie-search-results-grid">
          {searchResults.map((each, index) => {
            return(
-             <div key={index}>
-               <h3>{each.title}</h3>
-               {/*<img src={each.images.original.url} alt={each.title}/>*/}
-             </div>
+            <Movie
+              index={index}
+              title={each.title}
+              poster_path={each.poster_path}
+              overview={each.overview}
+              />
            )
          })}
        </div>
