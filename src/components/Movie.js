@@ -3,7 +3,6 @@ const Movie = ({title, index, overview, poster_path}) => {
 
   return (
     <div className="movie" key={index}>
-      <h3>{title}</h3>
       <img src={IMAGES_API + poster_path} alt={title}/>
       <div className="movie-overview">{overview}</div>
     </div>
