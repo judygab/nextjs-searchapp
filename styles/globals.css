@@ -33,7 +33,8 @@ body {
   transform: translateY(100%);
   transition: transform 0.2s ease-in-out;
   max-height: 100%;
-  background-color: grey;
+  background-color: black;
+  color: white;
 }
 
 .movie:hover .movie-overview {
@@ -132,6 +133,7 @@ input:focus{
   position: absolute;
   margin-top: 1.25rem;
   margin-right: 1rem;
+  background-color: transparent;
 }
 
 .text-gray-600 {
@@ -156,4 +158,13 @@ input:focus{
 
 .search-form {
   display: block;
+}
+
+.red-background {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  top:0;
+  background-color: #E50A12;
+  z-index: 0;
 }
